@@ -1,0 +1,12 @@
+[submodule "rust-book"]
+	shallow = true
+	path = resources/rust-book
+	url = https://github.com/rust-lang/book.git
+[submodule "rustlings"]
+	shallow = true
+	path = resources/rustlings
+	url = https://github.com/rust-lang/rustlings.git
+[submodule "100exercises"]
+	shallow = true
+	path = resources/100-exercises-to-learn-rust
+	url = https://github.com/mainmatter/100-exercises-to-learn-rust.git
