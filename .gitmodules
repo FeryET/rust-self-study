@@ -10,3 +10,7 @@
 	shallow = true
 	path = resources/100-exercises-to-learn-rust
 	url = https://github.com/mainmatter/100-exercises-to-learn-rust.git
+[submodule "rust-by-example"]
+	path = resources/rust-by-example
+	url = https://github.com/rust-lang/rust-by-example
+	shallow = true
