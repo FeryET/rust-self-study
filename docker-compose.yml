@@ -1,3 +1,4 @@
+name: "rust-books"
 services:
   nginx:
     image: nginx:alpine
