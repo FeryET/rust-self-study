@@ -37,6 +37,9 @@ update:
             exit 1
             ;;
         esac
+        if [ ! -d $subtree_dir ]; then
+            git subtree add --prefix "$subtree_dir" "$url" "$branch" --squash
+        fi
         git subtree pull --prefix "$subtree_dir" "$url" "$branch" --squash
     done
     echo "finished updating subtress."
