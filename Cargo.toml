@@ -1,0 +1,3 @@
+[workspace]
+members = ["projects/rust-cat"]
+resolver = "2"
