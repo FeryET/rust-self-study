@@ -29,14 +29,14 @@ background knowledge you need to understand a real-world project such as
 
 Our `grep` project will combine a number of concepts you’ve learned so far:
 
-* Organizing code ([Chapter 7][ch7]<!-- ignore -->)
-* Using vectors and strings ([Chapter 8][ch8]<!-- ignore -->)
-* Handling errors ([Chapter 9][ch9]<!-- ignore -->)
-* Using traits and lifetimes where appropriate ([Chapter 10][ch10]<!-- ignore -->)
-* Writing tests ([Chapter 11][ch11]<!-- ignore -->)
+- Organizing code ([Chapter 7][ch7]<!-- ignore -->)
+- Using vectors and strings ([Chapter 8][ch8]<!-- ignore -->)
+- Handling errors ([Chapter 9][ch9]<!-- ignore -->)
+- Using traits and lifetimes where appropriate ([Chapter 10][ch10]<!-- ignore -->)
+- Writing tests ([Chapter 11][ch11]<!-- ignore -->)
 
 We’ll also briefly introduce closures, iterators, and trait objects, which
-[Chapter 13][ch13]<!-- ignore --> and [Chapter 17][ch17]<!-- ignore --> will
+[Chapter 13][ch13]<!-- ignore --> and [Chapter 18][ch18]<!-- ignore --> will
 cover in detail.
 
 [ch7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
@@ -45,4 +45,4 @@ cover in detail.
 [ch10]: ch10-00-generics.html
 [ch11]: ch11-00-testing.html
 [ch13]: ch13-00-functional-features.html
-[ch17]: ch17-00-oop.html
+[ch18]: ch18-00-oop.html
