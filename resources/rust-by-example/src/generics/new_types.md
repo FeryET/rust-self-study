@@ -17,7 +17,6 @@ impl Years {
     }
 }
 
-
 impl Days {
     /// truncates partial years
     pub fn to_years(&self) -> Years {
@@ -41,6 +40,7 @@ fn main() {
 Uncomment the last print statement to observe that the type supplied must be `Years`.
 
 To obtain the `newtype`'s value as the base type, you may use the tuple or destructuring syntax like so:
+
 ```rust, editable
 struct Years(i64);
 
@@ -56,4 +56,3 @@ fn main() {
 [`structs`][struct]
 
 [struct]: ../custom_types/structs.md
-
