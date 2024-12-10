@@ -1,11 +1,11 @@
 ## Traits: Defining Shared Behavior
 
-A *trait* defines the functionality a particular type has and can share with
+A _trait_ defines the functionality a particular type has and can share with
 other types. We can use traits to define shared behavior in an abstract way. We
-can use *trait bounds* to specify that a generic type can be any type that has
+can use _trait bounds_ to specify that a generic type can be any type that has
 certain behavior.
 
-> Note: Traits are similar to a feature often called *interfaces* in other
+> Note: Traits are similar to a feature often called _interfaces_ in other
 > languages, although with some differences.
 
 ### Defining a Trait
@@ -27,14 +27,13 @@ instance. To do this, we need a summary from each type, and we’ll request that
 summary by calling a `summarize` method on an instance. Listing 10-12 shows the
 definition of a public `Summary` trait that expresses this behavior.
 
-<span class="filename">Filename: src/lib.rs</span>
+<Listing number="10-12" file-name="src/lib.rs" caption="A `Summary` trait that consists of the behavior provided by a `summarize` method">
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-12/src/lib.rs}}
 ```
 
-<span class="caption">Listing 10-12: A `Summary` trait that consists of the
-behavior provided by a `summarize` method</span>
+</Listing>
 
 Here, we declare a trait using the `trait` keyword and then the trait’s name,
 which is `Summary` in this case. We also declare the trait as `pub` so that
@@ -62,14 +61,13 @@ the headline, the author, and the location to create the return value of
 followed by the entire text of the tweet, assuming that the tweet content is
 already limited to 280 characters.
 
-<span class="filename">Filename: src/lib.rs</span>
+<Listing number="10-13" file-name="src/lib.rs" caption="Implementing the `Summary` trait on the `NewsArticle` and `Tweet` types">
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-13/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 10-13: Implementing the `Summary` trait on the
-`NewsArticle` and `Tweet` types</span>
+</Listing>
 
 Implementing a trait on a type is similar to implementing regular methods. The
 difference is that after `impl`, we put the trait name we want to implement,
@@ -107,7 +105,7 @@ But we can’t implement external traits on external types. For example, we can�
 implement the `Display` trait on `Vec<T>` within our `aggregator` crate because
 `Display` and `Vec<T>` are both defined in the standard library and aren’t
 local to our `aggregator` crate. This restriction is part of a property called
-*coherence*, and more specifically the *orphan rule*, so named because the
+_coherence_, and more specifically the _orphan rule_, so named because the
 parent type is not present. This rule ensures that other people’s code can’t
 break your code and vice versa. Without the rule, two crates could implement
 the same trait for the same type, and Rust wouldn’t know which implementation
@@ -124,14 +122,13 @@ In Listing 10-14, we specify a default string for the `summarize` method of the
 `Summary` trait instead of only defining the method signature, as we did in
 Listing 10-12.
 
-<span class="filename">Filename: src/lib.rs</span>
+<Listing number="10-14" file-name="src/lib.rs" caption="Defining a `Summary` trait with a default implementation of the `summarize` method">
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-14/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 10-14: Defining a `Summary` trait with a default
-implementation of the `summarize` method</span>
+</Listing>
 
 To use a default implementation to summarize instances of `NewsArticle`, we
 specify an empty `impl` block with `impl Summary for NewsArticle {}`.
@@ -209,12 +206,13 @@ function with any other type, such as a `String` or an `i32`, won’t compile
 because those types don’t implement `Summary`.
 
 <!-- Old headings. Do not remove or links may break. -->
+
 <a id="fixing-the-largest-function-with-trait-bounds"></a>
 
 #### Trait Bound Syntax
 
 The `impl Trait` syntax works for straightforward cases but is actually syntax
-sugar for a longer form known as a *trait bound*; it looks like this:
+sugar for a longer form known as a _trait bound_; it looks like this:
 
 ```rust,ignore
 pub fn notify<T: Summary>(item: &T) {
@@ -325,7 +323,7 @@ around how the `impl Trait` syntax is implemented in the compiler. We’ll cover
 how to write a function with this behavior in the [“Using Trait Objects That
 Allow for Values of Different
 Types”][using-trait-objects-that-allow-for-values-of-different-types]<!--
-ignore --> section of Chapter 17.
+ignore --> section of Chapter 18.
 
 ### Using Trait Bounds to Conditionally Implement Methods
 
@@ -337,20 +335,19 @@ traits. For example, the type `Pair<T>` in Listing 10-15 always implements the
 is a type alias for the type of the `impl` block, which in this case is
 `Pair<T>`). But in the next `impl` block, `Pair<T>` only implements the
 `cmp_display` method if its inner type `T` implements the `PartialOrd` trait
-that enables comparison *and* the `Display` trait that enables printing.
+that enables comparison _and_ the `Display` trait that enables printing.
 
-<span class="filename">Filename: src/lib.rs</span>
+<Listing number="10-15" file-name="src/lib.rs" caption="Conditionally implementing methods on a generic type depending on trait bounds">
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-15/src/lib.rs}}
 ```
 
-<span class="caption">Listing 10-15: Conditionally implementing methods on a
-generic type depending on trait bounds</span>
+</Listing>
 
 We can also conditionally implement a trait for any type that implements
 another trait. Implementations of a trait on any type that satisfies the trait
-bounds are called *blanket implementations* and are used extensively in the
+bounds are called _blanket implementations_ and are used extensively in the
 Rust standard library. For example, the standard library implements the
 `ToString` trait on any type that implements the `Display` trait. The `impl`
 block in the standard library looks similar to this code:
@@ -385,5 +382,5 @@ that checks for behavior at runtime because we’ve already checked at compile
 time. Doing so improves performance without having to give up the flexibility
 of generics.
 
-[using-trait-objects-that-allow-for-values-of-different-types]: ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types
+[using-trait-objects-that-allow-for-values-of-different-types]: ch18-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types
 [methods]: ch05-03-method-syntax.html#defining-methods
