@@ -11,12 +11,18 @@ exercises_dir := "resources/100-exercises-to-learn-rust"
 # Define the target directory
 gen_dir := "gen"
 
+install:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if ! command -v mdbook; then
+        mdbook_tar=$(mktemp)
+        curl -fSL 'https://github.com/rust-lang/mdBook/releases/download/v0.4.43/mdbook-v0.4.43-x86_64-unknown-linux-gnu.tar.gz' -o $mdbook_tar
+        tar -xvf $mdbook_tar -C ~/bin
+    fi
+
 update:
     #!/usr/bin/env bash
     set -euxo pipefail
-    echo "updating dependencies..."
-    cargo install mdbook --locked --version {{ md_book_version }}
-    echo "finished updating dependencies."
     echo "updating subtress..."
     for subtree_dir in "{{ rust_book_dir }}" "{{ rust_by_example_dir}}" "{{ exercises_dir }}"; do
         case $subtree_dir in
