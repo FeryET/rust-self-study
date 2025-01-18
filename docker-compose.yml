@@ -1,9 +1,0 @@
-name: "rust-books"
-services:
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "18080:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./gen:/usr/share/nginx/html:ro
