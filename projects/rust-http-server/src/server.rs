@@ -1,8 +1,10 @@
 use std::{
-    io::Read,
+    io::{Error, Read},
     net::{IpAddr, Ipv4Addr, SocketAddr, TcpListener, TcpStream},
     str::FromStr,
 };
+
+use crate::request::HttpRequest;
 
 pub struct HttpServer {
     pub tcp_listener: TcpListener,
@@ -22,11 +24,26 @@ impl HttpServer {
         }
     }
     pub fn handle(self: &Self, stream: TcpStream) -> Result<bool, std::io::Error> {
-        let request: String = stream
+        let raw_request = stream
             .bytes()
-            .map(|x| x.expect("cannot parse byte") as char)
-            .collect::<String>();
-        print!("{}", request);
-        Ok(true)
+            .map(|x| match x {
+                Ok(u) => Ok(u as char),
+                Err(e) => Err(e),
+            })
+            .collect::<Result<String, Error>>();
+        match raw_request {
+            Ok(r) => {
+                match HttpRequest::parse(&r) {
+                    Ok(h) => {
+                        println!("Http Request Message: {:?}", h);
+                    }
+                    Err(e) => {
+                        println!("{}", e);
+                    }
+                };
+                Ok(true)
+            }
+            Err(e) => Err(e),
+        }
     }
 }
