@@ -3,4 +3,10 @@ name = "rust-http-server"
 version = "0.1.0"
 edition = "2021"
 
+[dev-dependencies]
+rtest = "0.2.2"
+serial_test = "3.2.0"
+
 [dependencies]
+enum-as-inner = "0.6.1"
+regex = "1.11.1"

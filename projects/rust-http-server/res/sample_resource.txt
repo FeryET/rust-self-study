@@ -1,0 +1,1 @@
+This is a sample resource that will be included fetch via a request uri.
