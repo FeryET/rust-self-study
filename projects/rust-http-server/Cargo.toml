@@ -9,4 +9,5 @@ serial_test = "3.2.0"
 
 [dependencies]
 enum-as-inner = "0.6.1"
+path-tree = "0.8.1"
 regex = "1.11.1"

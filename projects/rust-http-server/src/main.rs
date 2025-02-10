@@ -72,13 +72,7 @@ fn handle_pics(r: &HttpRequest) -> Result<HttpResponse, HttpError> {
 
 fn start_server() {
     let (host, port): (&str, u16) = ("127.0.0.1", 18000);
-    let mut http_server: server::HttpServer =
-        server::HttpServer::bind(host, port).expect("Cannot bind to the address and port given!");
-    http_server.handlers.insert("/".to_string(), handle_root);
-    http_server
-        .handlers
-        .insert("/pics".to_string(), handle_pics);
-    http_server.serve();
+    todo!()
 }
 
 fn main() {

@@ -73,7 +73,7 @@ impl FromStr for HttpProtocol {
 // =========================================================
 // ================= HttpMethod Section ====================
 // =========================================================
-#[derive(Eq, PartialOrd, PartialEq, Copy, Clone, Debug)]
+#[derive(Eq, PartialOrd, PartialEq, Copy, Clone, Debug, Hash)]
 pub enum HttpMethod {
     DELETE,
     GET,
