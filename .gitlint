@@ -9,7 +9,7 @@
 #
 [general]
 # Ignore certain rules, this example uses both full name and id
-# ignore=title-trailing-punctuation, T3
+ignore=B6
 
 # verbosity should be a value between 1 and 3, the commandline -v flags take precedence over this
 # verbosity = 2
@@ -137,4 +137,4 @@ regex=(.*)dependabot(.*)
 # under [general] section above.
 [contrib-title-conventional-commits]
 # Specify allowed commit types. For details see: https://www.conventionalcommits.org/
-types = feat,fix,refactor,ci,docs,experimental,conf
+types = feat,fix,refactor,ci,docs,experimental,conf,chore
