@@ -1,26 +1,31 @@
 use std::collections::HashMap;
 
 use crate::{
-    common::{HttpError, HttpMethod, HttpStatus},
-    message::{HttpRequest, HttpResponse},
+    common::{HttpError, HttpMethod, HttpServerContext, HttpStatus},
+    request::HttpRequest,
+    response::HttpResponse,
 };
+use log::{debug, info};
 use path_tree::PathTree;
-use regex::{Captures, Error, Regex};
 
-pub type HttpRoutingParams = HashMap<String, String>;
-pub type HttpRouterFunc = fn(&HttpRequest, &HttpRoutingParams) -> Result<HttpResponse, HttpError>;
+pub type HttpRouterFunc = fn(&HttpRequest, &HttpServerContext) -> Result<HttpResponse, HttpError>;
 
 type HttpMethodRouter = PathTree<HttpRouterFunc>;
 type HttpRouterMap = HashMap<HttpMethod, HttpMethodRouter>;
+#[derive(Clone)]
 pub struct HttpRouter {
     router_map: HttpRouterMap,
 }
 
 impl HttpRouter {
-    fn parse_request_route(
+    pub fn parse_request_route(
         self: &Self,
         req: &HttpRequest,
-    ) -> Option<(&HttpRouterFunc, HttpRoutingParams)> {
+    ) -> Option<(&HttpRouterFunc, HttpServerContext)> {
+        debug!(
+            "HttpRouter: parsing request route protocol: {} # method: {} # uri: {}",
+            req.metadata.protocol, req.metadata.method, req.metadata.uri
+        );
         let item = match self.router_map.get(&req.metadata.method) {
             Some(router) => router.find(&req.metadata.uri),
             None => None,
@@ -54,14 +59,19 @@ impl HttpRouterBuilder {
             routers: HashMap::new(),
         }
     }
-    pub fn add_route(&mut self, method: HttpMethod, path: &str, func: HttpRouterFunc) -> &Self {
+    pub fn add_route(
+        self: &mut Self,
+        method: HttpMethod,
+        path: &str,
+        func: HttpRouterFunc,
+    ) -> &mut Self {
         if self.routers.contains_key(&(method, path.to_string())) {
             panic!("dupliate endpoint decleration method: {method} path:{path})")
         }
         self.routers.insert((method, path.to_string()), func);
         self
     }
-    pub fn build(&self) -> HttpRouter {
+    pub fn build(self: &Self) -> HttpRouter {
         let mut router_map: HttpRouterMap = HttpRouterMap::new();
         self.routers.iter().for_each(|((m, p), f)| -> () {
             if !router_map.contains_key(m) {
@@ -76,12 +86,10 @@ impl HttpRouterBuilder {
 #[cfg(test)]
 mod tests {
 
-    use crate::{
-        common::HttpProtocol,
-        message::{HttpHeaders, HttpRequestMetaData, HttpResponseMetaData},
-    };
-
     use super::*;
+    use crate::common::{HttpHeaders, HttpProtocol};
+    use crate::request::HttpRequestMetaData;
+    use crate::response::HttpResponseMetaData;
 
     #[test]
     fn test_http_router_builder_new_pass() {
@@ -89,13 +97,13 @@ mod tests {
         assert_eq!(builder.routers.capacity(), 0);
     }
 
-    fn emit_error(_: &HttpRequest, _: &HttpRoutingParams) -> Result<HttpResponse, HttpError> {
+    fn emit_error(_: &HttpRequest, _: &HttpServerContext) -> Result<HttpResponse, HttpError> {
         Err(HttpError::new(HttpStatus::BadRequest, "undefined"))
     }
 
     fn emit_success_response(
         _: &HttpRequest,
-        _: &HttpRoutingParams,
+        _: &HttpServerContext,
     ) -> Result<HttpResponse, HttpError> {
         Ok(HttpResponse {
             body: None,
@@ -161,14 +169,9 @@ mod tests {
         let (handler, params) = router.parse_request_route(&r).unwrap();
         assert_eq!(params.capacity(), 0);
         assert!(handler(&r, &params).is_ok());
-    }
-    #[test]
-    fn test_http_router_route_request_pass() {
-        let router = HttpRouterBuilder::new()
-            .add_route(HttpMethod::GET, "/", emit_success_response)
-            .build();
-        let r = test_request();
-        assert!(router.route(&r).is_ok());
-        assert_eq!(router.route(&r).unwrap().metadata.status, HttpStatus::Ok)
+        assert_eq!(
+            handler(&r, &params).unwrap().metadata.status,
+            HttpStatus::Ok
+        );
     }
 }

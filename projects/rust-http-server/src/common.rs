@@ -1,4 +1,4 @@
-use std::{fmt::Display, str::FromStr};
+use std::{collections::{BTreeMap, HashMap}, fmt::Display, str::FromStr};
 
 // =========================================================
 // ====================== HttpError ========================
@@ -327,6 +327,12 @@ impl HttpStatus {
         }
     }
 }
+
+
+pub type HttpHeaders = BTreeMap<String, String>;
+pub type HttpBody = Option<String>;
+pub type HttpServerContext = HashMap<String, String>;
+
 
 // ########################################################################
 // ############################### Tests ##################################
