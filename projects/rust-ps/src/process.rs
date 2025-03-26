@@ -63,7 +63,7 @@ pub struct ProcessStats {
     pub exit_code: i32,              // (52) Exit status
 }
 #[derive(EnumString, Debug, PartialEq)]
-enum State {
+pub enum State {
     #[strum(serialize = "R")]
     Running,
     #[strum(serialize = "S")]

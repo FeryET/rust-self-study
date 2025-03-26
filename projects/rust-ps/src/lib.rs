@@ -25,7 +25,7 @@ mod test {
 
     fn get_random_process_stat_pid() -> u32 {
         // Collect all numeric directory names (PIDs) from /proc
-        let mut pids: Vec<u32> = read_dir("/proc")
+        let pids: Vec<u32> = read_dir("/proc")
             .expect("Failed to read /proc")
             .filter_map(|entry| {
                 let entry = entry.expect("Failed to read dir entry");
