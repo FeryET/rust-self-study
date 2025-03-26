@@ -1,3 +1,9 @@
 [workspace]
-members = ["projects/rust-cat", "projects/rust-echo", "projects/rust-http-server", "projects/rust-ps", "projects/rust-tail"]
+members = [
+    "projects/rust-cat",
+    "projects/rust-echo",
+    "projects/rust-http-server",
+    "projects/rust-ps",
+    "projects/rust-tail",
+]
 resolver = "2"
