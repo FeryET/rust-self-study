@@ -1,3 +1,9 @@
+mod cli;
+
+use clap::Parser;
+use cli::Cli;
+
 fn main() {
-    println!("Welcome to PS clone in Rust!")
+    let args = Cli::parse();
+    println!("{:?}", args);
 }

@@ -93,7 +93,7 @@ pub enum State {
 impl FromStr for ProcessStats {
     type Err = error::Error;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
         let parts: Vec<&str> = s.split_whitespace().collect();
 
         if parts.len() != 52 {

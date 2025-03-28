@@ -6,7 +6,7 @@ edition = "2024"
 [dependencies]
 anyhow = "1.0.97"
 bytesize = { version = "2.0.1", features = ["serde"] }
-clap = { version = "4.5.32", features = ["derive"] }
+clap = { version = "4.5.32", features = ["cargo", "derive"] }
 strum = { version = "0.27.1", features = ["derive", "strum_macros"] }
 thiserror = "2.0.12"
 

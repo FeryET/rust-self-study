@@ -1,12 +1,13 @@
 use std::{fs::File, io::Read, str::FromStr};
 
-use error::Error;
+use error::{Error, Result};
 use process::{ProcessInfo, ProcessStats};
 
+mod cli;
 mod error;
 mod process;
 
-pub fn parse_pid_status_file(process_info: &ProcessInfo) -> Result<ProcessStats, Error> {
+pub fn parse_pid_status_file(process_info: &ProcessInfo) -> Result<ProcessStats> {
     let mut content: String = String::new();
     let _ = File::open(format!("/proc/{}/stat", process_info.id))
         .map_err(|e| Error::CannotReadStatusFile(format!("{}", e)))?
@@ -18,9 +19,9 @@ pub fn parse_pid_status_file(process_info: &ProcessInfo) -> Result<ProcessStats,
 #[cfg(test)]
 mod test {
     use super::*;
+    use rand::SeedableRng;
     use rand::rngs::StdRng;
     use rand::seq::IndexedRandom;
-    use rand::{Rng, SeedableRng};
     use std::fs::read_dir;
 
     fn get_random_process_stat_pid() -> u32 {
